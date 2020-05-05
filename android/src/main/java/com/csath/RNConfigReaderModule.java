@@ -1,6 +1,8 @@
 
 package com.csath;
 
+import android.provider.Settings;
+
 import java.lang.reflect.*;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -45,6 +47,12 @@ public class RNConfigReaderModule extends ReactContextBaseJavaModule {
                   constants.put(f.getName(), value);
               }
           } 
+      }
+      String testLabSetting = Settings.System.getString(this.reactContext.getContentResolver(), "firebase.test.lab");
+      if ("true".equals(testLabSetting)) {
+        constants.put("INSIDE_TEST_LAB", true);
+      } else {
+        constants.put("INSIDE_TEST_LAB", false);
       }
       return constants;
   }
